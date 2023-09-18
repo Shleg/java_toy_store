@@ -4,16 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class ToyStore {
+public class Toys {
     private List<Toy> toys;
-    private List<Toy> prizeToys; // Список призовых игрушек
+    private List<Toy> prizeToys;
 
-    public ToyStore() {
+    public Toys() {
         toys = new ArrayList<>();
         prizeToys = new ArrayList<>();
     }
 
-    // Метод для добавления новых игрушек
+    public List<Toy> getToys() {
+        return toys;
+    }
+
+    public void setToys(List<Toy> toys) {
+        this.toys = toys;
+    }
+
+    public List<Toy> getPrizeToys() {
+        return prizeToys;
+    }
+
+    public void setPrizeToys(List<Toy> prizeToys) {
+        this.prizeToys = prizeToys;
+    }
+
     public void addToy(Toy toy) {
         toys.add(toy);
     }
@@ -29,7 +44,6 @@ public class ToyStore {
         System.out.println("Игрушка с ID " + toyId + " не найдена.");
     }
 
-    // Метод для розыгрыша игрушек
     public void selectPrizeToy() {
         if (!toys.isEmpty()) {
             double totalWeight = toys.stream().mapToDouble(Toy::getWeight).sum();
@@ -43,9 +57,7 @@ public class ToyStore {
                 if (randomValue <= cumulativeWeight) {
                     Toy prizeToy = new Toy(toy.getId(), toy.getName(), 1, toy.getWeight());
                     toy.setQuantity(toy.getQuantity() - 1);
-                    if (toy.getQuantity() == 0) {
-                        toys.remove(toy);
-                    }
+                    toys.removeIf(t -> t.getQuantity() == 0);
                     prizeToys.add(prizeToy);
                     break;
                 }
@@ -61,10 +73,12 @@ public class ToyStore {
         }
     }
 
-    public void getPrizeToy() {
+    public Toy getPrizeToy() {
         if (!prizeToys.isEmpty()) {
             Toy prizeToy = prizeToys.remove(0);
             saveToyToFile(prizeToy);
+            return prizeToy;
         }
+        return null;
     }
 }
