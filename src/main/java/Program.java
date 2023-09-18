@@ -1,6 +1,6 @@
 public class Program {
     public static void main(String[] args) {
-        Toys toys = new Toys();
+        Toys toys =  Toys.getInstance();
 
         toys.addToy(new Toy(1, "Мяч", 10, 20));
         toys.addToy(new Toy(2, "Кукла", 5, 10));

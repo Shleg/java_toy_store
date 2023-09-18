@@ -5,12 +5,20 @@ import java.util.List;
 import java.util.Random;
 
 public class Toys {
+    private static Toys instance;
     private List<Toy> toys;
     private List<Toy> prizeToys;
 
-    public Toys() {
+    private Toys() {
         toys = new ArrayList<>();
         prizeToys = new ArrayList<>();
+    }
+
+    public static Toys getInstance() {
+        if (instance == null) {
+            instance = new Toys();
+        }
+        return instance;
     }
 
     public List<Toy> getToys() {
